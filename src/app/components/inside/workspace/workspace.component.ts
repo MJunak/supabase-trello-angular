@@ -2,7 +2,7 @@ import { CanMatch, Router } from '@angular/router';
 import { DataService } from './../../../services/data.service';
 import { AuthService } from './../../../services/auth.service';
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-workspace',
@@ -10,7 +10,8 @@ import { Observable } from 'rxjs';
   styleUrls: ['./workspace.component.scss'],
 })
 export class WorkspaceComponent implements OnInit {
-  catches$: Observable<any[]>;
+
+  catches$: BehaviorSubject<any> = new BehaviorSubject([]);
   user = this.auth.currentUser;
 
   constructor(
@@ -20,9 +21,11 @@ export class WorkspaceComponent implements OnInit {
   ) { }
 
   async ngOnInit() {
-    this.catches$ = this.dataService.supabase.from('catches').select('*').order('created_at', { ascending: false });
-    console.log('this.boards: ', this.catches);
+    let response = await this.dataService.supabase.from('catches').select('*');
+    console.log(response);
+    this.catches$.next(response.data);
   }
+
 
   createCatch() {
 
