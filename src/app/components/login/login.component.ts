@@ -9,7 +9,8 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
-  email = 'isaacout@gmail.com';
+  email = 'mail@marius-junak.de';
+  password = 'meinpw12345!';
   linkSuccess = false;
 
   constructor(
@@ -24,18 +25,18 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   async signIn() {
     this.spinner.show();
-    const result = await this.auth.signInWithEmail(this.email);
+    const { data: { user }, error } = await this.auth.signInWithEmail(this.email, this.password);
 
     this.spinner.hide();
 
-    if (!result.error) {
+    if (!error) {
       this.linkSuccess = true;
     } else {
-      alert(result.error.message);
+      alert(error.message);
     }
   }
 }

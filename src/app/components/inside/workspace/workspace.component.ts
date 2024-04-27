@@ -1,7 +1,8 @@
-import { Router } from '@angular/router';
+import { CanMatch, Router } from '@angular/router';
 import { DataService } from './../../../services/data.service';
 import { AuthService } from './../../../services/auth.service';
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-workspace',
@@ -9,7 +10,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./workspace.component.scss'],
 })
 export class WorkspaceComponent implements OnInit {
-  catches: any[] = [];
+  catches$: Observable<any[]>;
   user = this.auth.currentUser;
 
   constructor(
@@ -19,8 +20,12 @@ export class WorkspaceComponent implements OnInit {
   ) { }
 
   async ngOnInit() {
-    this.catches = await this.dataService.getCatches();
+    this.catches$ = this.dataService.supabase.from('catches').select('*').order('created_at', { ascending: false });
     console.log('this.boards: ', this.catches);
+  }
+
+  createCatch() {
+
   }
 
   signOut() {

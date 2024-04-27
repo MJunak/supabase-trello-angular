@@ -18,7 +18,7 @@ export class AuthService {
       environment.supabaseKey
     );
 
-    const user = this.supabase.auth.user();
+    const user = this.supabase.auth.getUser();
 
     if (user) {
       this._currentUser.next(user);
@@ -36,10 +36,10 @@ export class AuthService {
     });
   }
 
-  signInWithEmail(email: string) {
-    return this.supabase.auth.signIn({
-      email,
-    });
+  async signInWithEmail(email: string, password: string) {
+    return await this.supabase
+      .auth
+      .signInWithPassword({ email, password })
   }
 
   logout() {

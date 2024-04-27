@@ -11,7 +11,7 @@ export const CATCH_TABLE = 'catches';
 export class DataService {
 
 
-  private supabase: SupabaseClient;
+  public supabase: SupabaseClient;
 
   constructor() {
     this.supabase = createClient<Database>(environment.supabaseUrl, environment.supabaseKey);
