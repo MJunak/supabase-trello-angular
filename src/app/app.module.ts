@@ -16,7 +16,6 @@ import { FormsModule } from '@angular/forms';
     AppComponent,
     LoginComponent,
     WorkspaceComponent,
-    BoardComponent,
   ],
   imports: [
     BrowserModule,
@@ -29,4 +28,4 @@ import { FormsModule } from '@angular/forms';
   providers: [],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

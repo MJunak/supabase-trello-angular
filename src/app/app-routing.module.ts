@@ -1,5 +1,4 @@
 import { AuthGuard } from './guards/auth.guard';
-import { BoardComponent } from './components/inside/board/board.component';
 import { WorkspaceComponent } from './components/inside/workspace/workspace.component';
 import { LoginComponent } from './components/login/login.component';
 import { NgModule } from '@angular/core';
@@ -15,11 +14,11 @@ const routes: Routes = [
     component: WorkspaceComponent,
     canActivate: [AuthGuard],
   },
-  {
+  /*{
     path: 'workspace/:id',
     component: BoardComponent,
     canActivate: [AuthGuard],
-  },
+  },*/
   {
     path: '**',
     redirectTo: '/',
