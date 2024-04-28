@@ -3,6 +3,7 @@ import { WorkspaceComponent } from './components/inside/workspace/workspace.comp
 import { LoginComponent } from './components/login/login.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { CreateCatchComponent } from './components/inside/catches/create-catch/create-catch.component';
 
 const routes: Routes = [
   {
@@ -14,11 +15,16 @@ const routes: Routes = [
     component: WorkspaceComponent,
     canActivate: [AuthGuard],
   },
-  /*{
-    path: 'workspace/:id',
-    component: BoardComponent,
+  {
+    path: 'workspace/catches/create',
+    component: CreateCatchComponent,
     canActivate: [AuthGuard],
-  },*/
+  },
+  {
+    path: 'workspace/:id',
+    component: CreateCatchComponent,
+    canActivate: [AuthGuard],
+  },
   {
     path: '**',
     redirectTo: '/',

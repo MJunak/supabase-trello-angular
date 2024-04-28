@@ -9,12 +9,14 @@ import { GravatarModule } from 'ngx-gravatar';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
+import { CreateCatchComponent } from './components/inside/catches/create-catch/create-catch.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     WorkspaceComponent,
+    CreateCatchComponent,
   ],
   imports: [
     BrowserModule,

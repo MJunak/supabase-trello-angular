@@ -3,6 +3,7 @@ import { DataService } from './../../../services/data.service';
 import { AuthService } from './../../../services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { Tables } from 'types/supabase';
 
 @Component({
   selector: 'app-workspace',
@@ -11,7 +12,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 })
 export class WorkspaceComponent implements OnInit {
 
-  catches$: BehaviorSubject<any> = new BehaviorSubject([]);
+  catches$: BehaviorSubject<Array<Tables<'catches'>>> = new BehaviorSubject<Array<Tables<'catches'>>>([]);
   user = this.auth.currentUser;
 
   constructor(
@@ -23,7 +24,7 @@ export class WorkspaceComponent implements OnInit {
   async ngOnInit() {
     let response = await this.dataService.supabase.from('catches').select('*');
     console.log(response);
-    this.catches$.next(response.data);
+    this.catches$.next(response.data as Array<Tables<'catches'>>);
   }
 
 
