@@ -10,11 +10,17 @@ export const CATCH_TABLE = 'catches';
 })
 export class DataService {
 
-
   public supabase: SupabaseClient;
 
   constructor() {
-    this.supabase = createClient<Database>(environment.supabaseUrl, environment.supabaseKey);
+    this.supabase = createClient<Database>(environment.supabaseUrl, environment.supabaseKey,
+      {
+        auth: {
+          autoRefreshToken: true,
+          persistSession: true,
+        }
+      }
+    );
 
   }
 }

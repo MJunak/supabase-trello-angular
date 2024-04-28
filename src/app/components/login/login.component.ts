@@ -18,11 +18,7 @@ export class LoginComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private router: Router
   ) {
-    this.auth.currentUser.subscribe((user) => {
-      if (user) {
-        this.router.navigateByUrl('/workspace', { replaceUrl: true });
-      }
-    });
+
   }
 
   ngOnInit(): void { }
@@ -30,6 +26,10 @@ export class LoginComponent implements OnInit {
   async signIn() {
     this.spinner.show();
     const { data: { user }, error } = await this.auth.signInWithEmail(this.email, this.password);
+
+    if (user) {
+      this.router.navigateByUrl('/workspace', { replaceUrl: true });
+    }
 
     this.spinner.hide();
 

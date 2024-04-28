@@ -1,49 +1,49 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { createClient, SupabaseClient, User } from '@supabase/supabase-js';
+import { User } from '@supabase/supabase-js';
 import { BehaviorSubject } from 'rxjs';
-import { environment } from 'src/environments/environment';
+import { DataService } from './data.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private supabase: SupabaseClient;
   private _currentUser: BehaviorSubject<boolean | User | any> =
     new BehaviorSubject(null);
 
-  constructor(private router: Router) {
-    this.supabase = createClient(
-      environment.supabaseUrl,
-      environment.supabaseKey
-    );
+  constructor(private router: Router, private dataService: DataService) {
 
-    const user = this.supabase.auth.getUser();
 
-    if (user) {
-      this._currentUser.next(user);
-    } else {
-      this._currentUser.next(false);
-    }
+    this.dataService.supabase.auth.getUser().then((response) => {
+      console.log("my user", response.data.user);
 
-    this.supabase.auth.onAuthStateChange((event, session) => {
+      if (response && response.data.user) {
+        this._currentUser.next(response.data.user);
+      } else {
+        this._currentUser.next(false);
+      }
+
+    });
+
+    /*this.dataService.supabase.auth.onAuthStateChange((event, session) => {
       if (event === 'SIGNED_IN') {
         this._currentUser.next(session?.user);
       } else {
         this._currentUser.next(false);
         this.router.navigateByUrl('/', { replaceUrl: true });
       }
-    });
+    });*/
   }
 
+
   async signInWithEmail(email: string, password: string) {
-    return await this.supabase
+    return await this.dataService.supabase
       .auth
       .signInWithPassword({ email, password })
   }
 
   logout() {
-    this.supabase.auth.signOut();
+    this.dataService.supabase.auth.signOut();
   }
 
   get currentUser() {

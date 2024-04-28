@@ -14,6 +14,7 @@ export class AuthGuard implements CanActivate {
       filter((val) => val !== null),
       take(1),
       map((isAuthenticated) => {
+        console.log("isAuthenticated", isAuthenticated);
         if (isAuthenticated) {
           return true;
         } else {
